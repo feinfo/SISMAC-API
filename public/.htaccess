@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>    
     <IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "http://localhost"
+    #Header set Access-Control-Allow-Origin "http://localhost"
     </IfModule>
     
     <IfModule mod_negotiation.c>
