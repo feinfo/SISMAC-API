@@ -24,7 +24,7 @@ class Cors
          if (in_array($request->header('origin'), $possibleOrigins)) {
             $origin = $request->header('origin');
          } else {
-            $origin = 'https://site.cenprotnacional.org.br';
+            $origin = 'https://sismac.sistemasinfo.com.br';
          }
 
         $headers = [
