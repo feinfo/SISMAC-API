@@ -34,7 +34,7 @@ Route::group([
 });
 Route::apiResources([
     'usuarioPerfil' => 'Api\\UserPerfilController',
-     'testeip' => 'Api\\EscolaController'
+     'escola' => 'Api\\EscolaController'
 ]);
 
 
