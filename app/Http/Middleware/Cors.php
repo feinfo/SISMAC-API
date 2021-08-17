@@ -17,7 +17,8 @@ class Cors
     {
 
         $possibleOrigins = [
-            'https://sismac.sistemasinfo.com.br'
+            'https://sismac.sistemasinfo.com.br',
+            'http://localhost:8080'
          ];
          //print $request->header('origin');
          if (in_array($request->header('origin'), $possibleOrigins)) {

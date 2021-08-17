@@ -33,7 +33,8 @@ Route::group([
 
 });
 Route::apiResources([
-    'usuarioPerfil' => 'Api\\UserPerfilController'
+    'usuarioPerfil' => 'Api\\UserPerfilController',
+     'testeip' => 'Api\\EscolaController'
 ]);
 
 
