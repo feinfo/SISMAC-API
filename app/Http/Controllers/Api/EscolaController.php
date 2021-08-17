@@ -14,6 +14,14 @@ class EscolaController extends Controller
         return response()->json($request->ip());
         // return response()->json(Escola::where('ic_ativo',"1")->get());
     }
+    public function show(Request $request)
+    {
+        return response()->json($request->ip());
+        // return response()->json(Escola::where('ic_ativo',"1")->get());
+    }
+    public function storage()
+    {
+    }
    
 
 }
