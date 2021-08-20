@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Escola extends Model
+class Etapa extends Model
 {
     //
     protected $fillable = [
-        'nm_escola', 'sg_uf',
+        'nm_etapa', 'cd_escola'
     ];
-    protected $table = "escola";
+    protected $table = "etapa";
     public $timestamps = false;
 }

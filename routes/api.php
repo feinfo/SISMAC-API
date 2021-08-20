@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,16 +26,41 @@ Route::group([
 
 ], function ($router) {
 
-    Route::post('logout', 'Api\\Auth\\AuthController@logout');
-    Route::post('refresh', 'Api\\Auth\\AuthController@refresh');
-    Route::post('me', 'Api\\Auth\\AuthController@me');
-    
-    
+    $router->post('logout', 'Api\\Auth\\AuthController@logout');
+    $router->post('refresh', 'Api\\Auth\\AuthController@refresh');
+    $router->post('me', 'Api\\Auth\\AuthController@me');
 
 });
+
+Route::group([
+
+    'middleware' => ['cors'],
+    'prefix' => 'escola'
+
+], function ($router) {
+    $router->post('escolas', 'Api\\EscolaController@index');
+    $router->post('ufEscolas', 'Api\\EscolaController@getUfEscolas');
+    $router->post('etapas', 'Api\\EscolaController@getEtapas');
+    $router->post('ufs', 'Api\\EscolaController@getUFs');
+    $router->post('cadastrar', 'Api\\EscolaController@cadastrar');
+    $router->post('etapa/cadastrar', 'Api\\EscolaController@cadastrarEtapa');
+    $router->post('filtrar', 'Api\\EscolaController@filtrar');
+
+});
+
+Route::group([
+
+    'middleware' => ['cors'],
+    'prefix' => 'aluno'
+
+], function ($router) {
+    $router->post('filtrar', 'Api\\AlunoController@filtrar');
+    $router->post('editar', 'Api\\AlunoController@editar');
+    $router->post('cadastrar', 'Api\\AlunoController@cadastrar');
+});
+
 Route::apiResources([
     'usuarioPerfil' => 'Api\\UserPerfilController',
-     'escola' => 'Api\\EscolaController'
 ]);
 
 
