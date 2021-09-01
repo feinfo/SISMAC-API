@@ -58,6 +58,17 @@ Route::group([
     $router->post('editar', 'Api\\AlunoController@editar');
     $router->post('cadastrar', 'Api\\AlunoController@cadastrar');
 });
+Route::group([
+
+    'middleware' => ['cors'],
+    'prefix' => 'avaliacao'
+
+], function ($router) {
+    $router->post('etapas', 'Api\\AvaliacaoController@getEtapas');
+    $router->post('filtrar', 'Api\\AvaliacaoController@filtrar');
+    $router->post('cadastrar', 'Api\\AvaliacaoController@cadastrar');
+    $router->post('editar', 'Api\\AvaliacaoController@editar');
+});
 
 Route::apiResources([
     'usuarioPerfil' => 'Api\\UserPerfilController',
