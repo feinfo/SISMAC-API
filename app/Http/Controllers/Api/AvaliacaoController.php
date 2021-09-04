@@ -64,7 +64,7 @@ class AvaliacaoController extends Controller
             $decodeRespostas = json_decode($respostas);
 
             $questao = new Questao;
-            $questao->nm_questao = $nm_questao;
+            $questao->ds_questao = $nm_questao;
             $questao->cd_avaliacao = $cd_avaliacao;
             $questao->save();
             
@@ -128,6 +128,45 @@ class AvaliacaoController extends Controller
             $aluno->cd_escola = $cd_escola;
             $aluno->cd_etapa = $cd_etapa;
             $aluno->save();
+
+            $decodeQuestoes = json_decode($questoes);
+            
+
+            foreach($decodeQuestoes as $questaoAlterada){
+                $questao = Questao::find($questaoAlterada->cd_questao);
+                $questao->ds_questao = $questaoAlterada->ds_questao;
+                $questao->save();
+            }
+
+            $decodeRespostas = json_decode($respostas);
+
+            foreach($decodeRespostas as $respostaAlterada){
+                $resposta = Resposta::find($respostaAlterada->cd_resposta);
+                $resposta->nm_resposta = $respostaAlterada->nm_resposta;
+                $resposta->save();
+            }
+
+            $existeNovaQuestao = strlen($nm_questao) > 3 ? 1 : 0;
+
+            if($existeNovaQuestao)
+            {
+
+                $novaQuestao = new Questao;
+                $novaQuestao->ds_questao = $nm_questao;
+                $novaQuestao->cd_avaliacao = $cd_avaliacao;
+                $novaQuestao->save();
+                
+                $decodeNovasRespostas = json_decode($novasRespostas);
+    
+                foreach($decodeNovasRespostas as $novaResposta){
+                    $resposta = new Resposta;
+                    $resposta->cd_avaliacao = $cd_avaliacao;
+                    $resposta->cd_questao = $novaQuestao->cd_questao;
+                    $resposta->nm_resposta = $novaResposta->nm_resposta;
+                    $resposta->save();
+                }
+            }
+            
             return response()->json(200);
         }
         catch(Error $er){
