@@ -107,7 +107,7 @@ class AvaliacaoController extends Controller
                 $q->where('cd_uf', $cd_uf);
             })
             ->when($cd_escola, function($q, $cd_escola){
-                $q->where('cd_escola', $cd_escola);
+                $q->where('escola.cd_escola', $cd_escola);
             })
             ->when($cd_etapa, function($q, $cd_etapa){
                 $q->where('cd_etapa', $cd_etapa);
