@@ -24,7 +24,8 @@ class EscolaController extends Controller
 
     public function getUfEscolas(){
         return response()->json(
-            Escola::selectRaw('cd_uf as value, sg_uf as text')->where('ic_ativo',"1")->groupBy(['cd_uf', 'sg_uf'])->get()
+            Escola::selectRaw('cd_uf as value, sg_uf as text')->where('ic_ativo',"1")->groupBy(['cd_uf', 'sg_uf'])->orderBy('sg_uf')
+            ->get()
         );
 
     }
@@ -40,7 +41,9 @@ class EscolaController extends Controller
     }
     public function getUFs(){
         return response()->json(
-            DB::table('uf')->get()
+            DB::table('uf')
+            ->orderBy('sg_uf')
+            ->get()
             ,200
         );
     }
@@ -48,6 +51,21 @@ class EscolaController extends Controller
         extract($request->all());
         try{
             $escola = new Escola;
+            $escola->nm_escola = $nm_escola;
+            $escola->cd_uf = $cd_uf;
+            $escola->sg_uf = $sg_uf;
+            $escola->save();
+            return response()->json(200);
+
+        }
+        catch(Error $er){
+            return response()->json($er, 201);
+        }
+    }
+    public function editar(Request $request){
+        extract($request->all());
+        try{
+            $escola = Escola::find($cd_escola);
             $escola->nm_escola = $nm_escola;
             $escola->cd_uf = $cd_uf;
             $escola->sg_uf = $sg_uf;

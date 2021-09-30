@@ -159,11 +159,15 @@ class AvaliacaoController extends Controller
                 $decodeNovasRespostas = json_decode($novasRespostas);
     
                 foreach($decodeNovasRespostas as $novaResposta){
-                    $resposta = new Resposta;
-                    $resposta->cd_avaliacao = $cd_avaliacao;
-                    $resposta->cd_questao = $novaQuestao->cd_questao;
-                    $resposta->nm_resposta = $novaResposta->nm_resposta;
-                    $resposta->save();
+                    $existeResposta = strlen($novaResposta->nm_resposta) > 3 ? 1 : 0;
+                    if($existeResposta)
+                    {
+                        $resposta = new Resposta;
+                        $resposta->cd_avaliacao = $cd_avaliacao;
+                        $resposta->cd_questao = $novaQuestao->cd_questao;
+                        $resposta->nm_resposta = $novaResposta->nm_resposta;
+                        $resposta->save();
+                    }
                 }
             }
             
@@ -172,6 +176,29 @@ class AvaliacaoController extends Controller
         catch(Error $er){
             return response()->json($er,201);
         }
+
+    }
+    public function getDisciplinas(Request $request){
+        extract($request->all());
+        return response()->json(
+            Avaliacao::where('avaliacao.ic_ativo','1')
+            ->with('questoes')
+            ->with('respostas')
+            ->join('escola', 'escola.cd_escola', 'avaliacao.cd_escola')
+            ->when($cd_uf, function($q, $cd_uf){
+                $q->where('cd_uf', $cd_uf);
+            })
+            ->when($cd_escola, function($q, $cd_escola){
+                $q->where('escola.cd_escola', $cd_escola);
+            })
+            ->when($cd_etapa, function($q, $cd_etapa){
+                $q->where('cd_etapa', $cd_etapa);
+            })
+            ->when($nm_avaliacao, function($q, $nm_avaliacao){
+                $q->where('nm_avaliacao', 'like', "%".$nm_avaliacao."%");
+            })
+            ->get()
+        );
 
     }
 

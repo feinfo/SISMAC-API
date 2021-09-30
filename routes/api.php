@@ -43,6 +43,7 @@ Route::group([
     $router->post('etapas', 'Api\\EscolaController@getEtapas');
     $router->post('ufs', 'Api\\EscolaController@getUFs');
     $router->post('cadastrar', 'Api\\EscolaController@cadastrar');
+    $router->post('editar', 'Api\\EscolaController@editar');
     $router->post('etapa/cadastrar', 'Api\\EscolaController@cadastrarEtapa');
     $router->post('filtrar', 'Api\\EscolaController@filtrar');
 
@@ -65,6 +66,17 @@ Route::group([
 
 ], function ($router) {
     $router->post('etapas', 'Api\\AvaliacaoController@getEtapas');
+    $router->post('filtrar', 'Api\\AvaliacaoController@filtrar');
+    $router->post('cadastrar', 'Api\\AvaliacaoController@cadastrar');
+    $router->post('editar', 'Api\\AvaliacaoController@editar');
+});
+Route::group([
+
+    'middleware' => ['cors'],
+    'prefix' => 'relatorio'
+
+], function ($router) {
+    $router->post('avaliacaoaluno', 'Api\\RelatorioController@avaliacaoAluno');
     $router->post('filtrar', 'Api\\AvaliacaoController@filtrar');
     $router->post('cadastrar', 'Api\\AvaliacaoController@cadastrar');
     $router->post('editar', 'Api\\AvaliacaoController@editar');
